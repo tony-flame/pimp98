@@ -1,0 +1,170 @@
+:root {
+  /* Win98 chrome */
+  --face: #c0c0c0;
+  --face-light: #dfdfdf;
+  --face-dark: #b0b0b0;
+  --white: #ffffff;
+  --shadow: #808080;
+  --dark: #0a0a0a;
+  --navy: #000080;
+  --navy-2: #1084d0;
+  --teal: #008080;
+  --desk: #0d6a63;
+  --desk-deep: #084b46;
+
+  /* accents */
+  --accent: #000080;
+  --accent-soft: #ccddff;
+  --money: #1c6b2a;
+  --danger: #8b1a1a;
+  --warn: #8a6a12;
+  --ink: #141414;
+  --ink-soft: #3d3d3d;
+
+  /* type */
+  --font-ui: "W95FA", "MS Sans Serif", "Tahoma", "Verdana", "Segoe UI", sans-serif;
+  --font-mono: "Perfect DOS VGA 437", "Lucida Console", "Consolas", monospace;
+
+  /* metrics */
+  --stage-w: 1024px;
+  --stage-h: 768px;
+  --taskbar-h: 32px;
+  --border-raised: inset -1px -1px var(--dark), inset 1px 1px var(--white), inset -2px -2px var(--shadow), inset 2px 2px var(--face-light);
+  --border-sunken: inset -1px -1px var(--white), inset 1px 1px var(--shadow), inset -2px -2px var(--face-light), inset 2px 2px var(--dark);
+  --border-thin-sunken: inset -1px -1px var(--white), inset 1px 1px var(--shadow);
+  --border-window: inset -1px -1px var(--dark), inset 1px 1px var(--face-light), inset -2px -2px var(--shadow), inset 2px 2px var(--white);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #050505;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--ink);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+#crt-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+#stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--stage-w);
+  height: var(--stage-h);
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: var(--desk);
+  color: var(--ink);
+}
+
+#stage.no-crt {
+  filter: none;
+}
+
+/* CRT glow / scanlines / vignette */
+#crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+}
+
+#crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9001;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+#stage {
+  image-rendering: pixelated;
+}
+
+body.no-scanlines #crt-screen::before {
+  display: none;
+}
+
+body.crt-on #stage {
+  animation: crt-flicker 7s infinite;
+}
+
+@keyframes crt-flicker {
+  0%, 96%, 100% { filter: brightness(1); }
+  97% { filter: brightness(1.03); }
+  98% { filter: brightness(0.985); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.crt-on #stage { animation: none; }
+}
+
+/* scrollbars */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(var(--face-light) 0% 25%, var(--white) 0% 50%) 0 0 / 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--face);
+  box-shadow: var(--border-raised);
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--face-light);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--face);
+}
+
+::selection {
+  background: var(--navy);
+  color: #fff;
+}

@@ -1,0 +1,13 @@
+node_modules
+dist
+.vite
+coverage
+*.local
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+shots
+docs/screenshots/.cache

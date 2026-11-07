@@ -1,0 +1,17 @@
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  base: './',
+  build: {
+    target: 'es2022',
+    assetsInlineLimit: 4096,
+  },
+  server: {
+    port: 5173,
+    strictPort: false,
+  },
+  test: {
+    environment: 'jsdom',
+    include: ['tests/**/*.test.ts'],
+  },
+});

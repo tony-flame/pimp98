@@ -1,0 +1,21 @@
+{
+  "name": "pimp98",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "PIMP 98 - a text-driven management noir set in a Windows 98 shell",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit false --emitDeclarationOnly false --pretty",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^27.4.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.7",
+    "vitest": "3.2.7"
+  }
+}
